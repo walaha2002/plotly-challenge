@@ -17,7 +17,7 @@ d3.json("/data/samples.json").then((data) => {
 
     //Define the plot layout
     var layout = {
-        title: "Operational Taxonomic Units"
+        title: "Operational Taxonomic Units",
         xaxis: {title: "something"},
         yaxis: {title: "something else"}
     };
