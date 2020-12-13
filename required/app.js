@@ -8,20 +8,20 @@
 //     });
 // }
 
-function buildBar() {
+
 
     d3.json("/data/samples.json").then((samples) => {
         var otu_ids = samples.sample_values.id;
         var sample_values = samples.sample_values.sample_values;
         var otu_labels = samples.sample_values.otu_ids;
-        var names = samles.names;
+        var names = samples.names;
 
         console.log(otu_ids);
         console.log(sample_values);
         console.log(otu_labels);
         console.log(names);
     });
-};
+
 // });
 
 
