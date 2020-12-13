@@ -2,12 +2,19 @@
 // const data = d3.json("/data/samples.json");
 //console.log(d3.json("/data/samples.json"));
 //console.log(data);
+function unpack(rows, index) {
+    return rows.map(function (row) {
+        return row[index];
+    });
+}
+
 function buildBar() {
 
     d3.json("/data/samples.json").then((samples) => {
         var otu_ids = unpack(samples.sample_values.id, 0);
         var sample_values = unpack(samples.sample_values.sample_values, 2);
         var otu_labels = unpack(samples.sample_values.otu_ids, 1);
+
         console.log(otu_ids);
         console.log(sample_values);
         console.log(otu_labels);
