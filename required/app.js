@@ -2,14 +2,15 @@
 // const data = d3.json("data/samples.json");
 console.log(d3.json("/data/samples.json"));
 
-d3.json("/data/samples.json").then((data) => {
+d3.json("/data/samples.json").then((samples) => {
 
     //Create the Traces
     var trace1 = {
-        x: data.sample_values,
-        y: data.otu_labels,
+        x: samples.sample_values,
+       // y: samples.otu_labels,
         type: 'horizontalBar',
-        name: "Operational Taxonomic Units"
+        name: "Operational Taxonomic Units",
+        label: samples.otu_labels
     };
 
     //Create the data array for the plot
