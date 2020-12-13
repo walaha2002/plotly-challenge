@@ -1,28 +1,40 @@
 // Read in json data
-// const data = d3.json("data/samples.json");
-console.log(d3.json("/data/samples.json"));
+// const data = d3.json("/data/samples.json");
+//console.log(d3.json("/data/samples.json"));
+//console.log(data);
+function buildBar() {
 
-d3.json("/data/samples.json").then((samples) => {
-    const data = samples;
+    d3.json("/data/samples.json").then((samples) => {
+        var otu_ids = unpack(samples.sample_values.id, 0);
+        var sample_values = unpack(samples.sample_values.sample_values, 2);
+        var otu_labels = unpack(samples.sample_values.otu_ids, 1);
+        console.log(otu_ids);
+        console.log(sample_values);
+        console.log(otu_labels);
+    });
+};
+// });
 
 
-    // Sort descending to then get the top 10 OTUs
+//     // Sort descending to then get the top 10 OTUs
     // data.sort((a,b) => a-b);
     // console.log(data);
-    
-    data.sort(function (a, b) {
-        return (b.sample_values) - (a.sample_values);
-    });
 
-    // Slice the first 10 objects for plotting
-    data = data.slice(0, 10);
+//});
+//     data.sort(function (a, b) {
+//         return (b.names) - (a.names);
+//     });
 
-    // Reverse the array
-    data = data.reverse();
+//     // Slice the first 10 objects for plotting
 
-    console.log(data);
-    
-});
+//     // Reverse the array
+    //  data = data.reverse();
+    //  console.log(data);
+//)};
+
+//     console.log(data);
+
+// });
 
 //     //Create the Traces
 //     var trace1 = {
