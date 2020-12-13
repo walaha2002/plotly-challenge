@@ -1,6 +1,6 @@
 // Read in json data
 // const data = d3.json("/data/samples.json");
-//console.log(d3.json("/data/samples.json"));
+console.log(d3.json("/data/samples.json"));
 //console.log(data);
 // function unpack(rows, index) {
 //     return rows.map(function (row) {
@@ -11,15 +11,15 @@
 
 
     d3.json("/data/samples.json").then((samples) => {
-        var otu_ids = samples.sample_values.id;
-        var sample_values = samples.sample_values.sample_values;
-        var otu_labels = samples.sample_values.otu_ids;
-        var names = samples.names;
+        var otu_ids = samples.names;
+        // var sample_values = samples.sample_values.sample_values;
+        // var otu_labels = samples.otu_labels.otu_labels;
+        
 
         console.log(otu_ids);
-        console.log(sample_values);
-        console.log(otu_labels);
-        console.log(names);
+        // console.log(sample_values);
+        // console.log(otu_labels);
+        
     });
 
 // });
