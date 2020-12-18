@@ -11,13 +11,13 @@
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
 
 
-
 d3.json("/data/samples.json").then((samples) => {
-    var glblsamples;
+    var glblSamples;
     var names = samples.names;
     var samples = samples.samples;
-    glblsamples = samples.filter(item=>item.id==="940")[0].otu_ids;
-    var labels = samples.filter(item=>item.id==="940")[0].sample_values;
+    glblSamples = samples.filter(item=>item.id==="940")[0].otu_ids;
+    var sampleValues = samples.filter(item=>item.id==="940")[0].sample_values;
+    var myLabels = samples.filter(item=>item.id==="940")[0].otu_labels;
     //var metadata = samples.metadata;
     //     var otu_ids = samples.names;
     //     var sample_values = samples.sample_values.sample_values;
@@ -25,8 +25,26 @@ d3.json("/data/samples.json").then((samples) => {
 
     console.log(names);
     console.log(samples);
-    console.log(glblsamples);
-    console.log(labels);
+    console.log(glblSamples);
+    console.log(sampleValues);
+    console.log(myLabels);
+
+    //Create trace
+    var trace1={
+        x:glblSamples,
+        y:sampleValues,
+        orientation:'h',
+        type:'bar',
+        text:myLabels
+    };
+
+    var data = [trace1];
+
+    var layout ={
+        title: "Belly Button Research"
+    };
+
+    Plotly.newPlot("plot",data,layout);
     // var toPlot = [{
     //     type: 'bar',
     //     x: names,
