@@ -15,9 +15,9 @@ d3.json("/data/samples.json").then((samples) => {
     var glblSamples;
     var names = samples.names;
     var samples = samples.samples;
-    glblSamples = samples.filter(item=>item.id==="940")[0].otu_ids;
-    var sampleValues = samples.filter(item=>item.id==="940")[0].sample_values;
-    var myLabels = samples.filter(item=>item.id==="940")[0].otu_labels;
+    glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
+    var sampleValues = samples.filter(item => item.id === "940")[0].sample_values;
+    var myLabels = samples.filter(item => item.id === "940")[0].otu_labels;
     //var metadata = samples.metadata;
     //     var otu_ids = samples.names;
     //     var sample_values = samples.sample_values.sample_values;
@@ -30,21 +30,43 @@ d3.json("/data/samples.json").then((samples) => {
     console.log(myLabels);
 
     //Create trace
-    var trace1={
-        x:glblSamples,
-        y:sampleValues,
-        orientation:'h',
-        type:'bar',
-        text:myLabels
+    var trace1 = {
+        x: glblSamples,
+        y: sampleValues,
+        orientation: 'h',
+        type: 'bar',
+        text: myLabels
     };
 
     var data = [trace1];
 
-    var layout ={
+    var layout = {
         title: "Belly Button Research"
     };
 
-    Plotly.newPlot("plot",data,layout);
+    Plotly.newPlot("plot", data, layout);
+
+    var trace2 = {
+        x: glblSamples,
+        y: sampleValues,
+        mode: 'markers',
+        marker: sampleValues,
+        text: myLabels
+    };
+
+    var bubble = [trace2];
+
+    var bbleLayout = {
+        title: 'Bubble',
+        showlegend: false,
+        height: 600,
+        width: 600
+    };
+
+    Plotly.newPlot('bubble', bubble, bbleLayout);
+
+});
+
     // var toPlot = [{
     //     type: 'bar',
     //     x: names,
@@ -52,7 +74,7 @@ d3.json("/data/samples.json").then((samples) => {
     //     orientation: 'h'
     // }];
     // Plotly.newPlot('plot', toPlot);
-});
+ 
 
 
 
