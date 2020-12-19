@@ -9,7 +9,7 @@
 //Use Plotly to plot using the element in html
 //Take 1 name and use it to filter the samples to get 1st object after filtering, then use the labels and the object to create the graph
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
-var metadata;
+//var metadata;
 
 d3.json("/data/samples.json").then((samples) => {
     var glblSamples;
@@ -25,15 +25,19 @@ d3.json("/data/samples.json").then((samples) => {
     // console.log(glblSamples);
     // console.log(sampleValues);
     // console.log(myLabels);
+// Slice all variables needed for horizontal chart
 
+var slceGlblSamples = glblSamples.slice(0,10).reverse();
+var slceSampleValues = sampleValues.slice(0,10).reverse();
+var slceMyLabels = myLabels.slice(0,10).reverse();
 
     //Create trace
     var trace1 = {
-        x: glblSamples,
-        y: sampleValues,
+        x: slceGlblSamples,
+        y: slceSampleValues,
         orientation: 'h',
         type: 'bar',
-        text: myLabels
+        text: slceMyLabels
     };
 
     var data = [trace1];
@@ -117,10 +121,11 @@ d3.json("/data/samples.json").then((metadata) => {
         if (dataset === '940') {
             //         data = ID;
             idArray = [ID, age, gender];
+           
         }
 
         // Note the extra brackets around 'x' and 'y'
-  Plotly.restyle("plot", "x", [idArray]);
+  Plotly.restyle("sample-metadata", "x", [idArray]);
   //Plotly.restyle("plot", "y", [y]);
     }
     //     }
