@@ -10,21 +10,37 @@
 //Take 1 name and use it to filter the samples to get 1st object after filtering, then use the labels and the object to create the graph
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
 //var metadata;
+function getData(names) {
+    var dropdownMenu = d3.select("#selDataset");
+console.log(names)
+    names.forEach(name=>{
+        dropdownMenu.append('option').text(name).attr("value",name)
+    })
+
+    //     // Assign the value of the dropdown menu option to a variable
+    // var dataset = dropdownMenu.property("value");
+
+    // //     // Initialize an empty array for the demographic info
+    // var idArray = [];
+
+    // if (dataset === '940') {
+    //     //         data = ID;
+    //     idArray = [ID, age, gender];
+
+    // }
+
+    // // Note the extra brackets around 'x' and 'y'
+    // Plotly.restyle("sample-metadata", "x", [idArray]);
+    // //Plotly.restyle("plot", "y", [y]);
+}
 
 d3.json("/data/samples.json").then((samples) => {
-    var glblSamples;
-    var names = samples.names;
+    getData(samples.names)
     var samples = samples.samples;
-    glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
+    var glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
     var sampleValues = samples.filter(item => item.id === "940")[0].sample_values;
     var myLabels = samples.filter(item => item.id === "940")[0].otu_labels;
 
-
-    // console.log(names);
-    // console.log(samples);
-     console.log(glblSamples);
-    // console.log(sampleValues);
-    // console.log(myLabels);
 
     // Slice all variables needed for horizontal chart
 
@@ -35,10 +51,10 @@ d3.json("/data/samples.json").then((samples) => {
     //Create trace
     var trace1 = {
         x: slceSampleValues,
-        y: `OTU ${slceGlblSamples}`,
+        y: slceGlblSamples.map(otu_id =>  `OTU ${otu_id}`),
         orientation: 'h',
         type: 'bar',
-        text: slceMyLabels
+        text: slceMyLabels,
     };
 
     var data = [trace1];
@@ -110,25 +126,7 @@ d3.json("/data/samples.json").then((metadata) => {
     //     d3.selectAll("#selDataset").on("change", getData);
 
     //    // Function called by DOM changes
-    function getData() {
-        var dropdownMenu = d3.select("#selDataset");
-
-        //     // Assign the value of the dropdown menu option to a variable
-        var dataset = dropdownMenu.property("value");
-
-        //     // Initialize an empty array for the demographic info
-        var idArray = [];
-
-        if (dataset === '940') {
-            //         data = ID;
-            idArray = [ID, age, gender];
-
-        }
-
-        // Note the extra brackets around 'x' and 'y'
-        Plotly.restyle("sample-metadata", "x", [idArray]);
-        //Plotly.restyle("plot", "y", [y]);
-    }
+   
     //     }
     //     else if (dataset == 'uk') {
     //         data = uk;
@@ -147,12 +145,5 @@ d3.json("/data/samples.json").then((metadata) => {
 
     //   init();
 
-    //     // d3.json("/data/samples.json").then((samples) => {
-    //     //     var glblSamples;
-    //     //     var names = samples.names;
-    //     //     var samples = samples.samples;
-    //     //     glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
-    //     //     var sampleValues = samples.filter(item => item.id === "940")[0].sample_values;
-    //     //     var myLabels = samples.filter(item => item.id === "940")[0].otu_labels;
-    //     //var metadata=metadata.filter(item => item.id === "940")[0].id;
+  
 });
