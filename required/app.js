@@ -22,19 +22,20 @@ d3.json("/data/samples.json").then((samples) => {
 
     // console.log(names);
     // console.log(samples);
-    // console.log(glblSamples);
+     console.log(glblSamples);
     // console.log(sampleValues);
     // console.log(myLabels);
-// Slice all variables needed for horizontal chart
 
-var slceGlblSamples = glblSamples.slice(0,10).reverse();
-var slceSampleValues = sampleValues.slice(0,10).reverse();
-var slceMyLabels = myLabels.slice(0,10).reverse();
+    // Slice all variables needed for horizontal chart
+
+    var slceGlblSamples = glblSamples.slice(0, 10);
+    var slceSampleValues = sampleValues.slice(0, 10);
+    var slceMyLabels = myLabels.slice(0, 10);
 
     //Create trace
     var trace1 = {
-        x: slceGlblSamples,
-        y: slceSampleValues,
+        x: slceSampleValues,
+        y: slceGlblSamples,
         orientation: 'h',
         type: 'bar',
         text: slceMyLabels
@@ -98,10 +99,10 @@ d3.json("/data/samples.json").then((metadata) => {
     console.log("Location*********");
     console.log(location);
 
-// var ageArray = Object.values(age);
-// var ageLabel = Object.keys(age);
-// console.log(ageArray);
-// console.log(ageLabel);
+    // var ageArray = Object.values(age);
+    // var ageLabel = Object.keys(age);
+    // console.log(ageArray);
+    // console.log(ageLabel);
 
     //     // console.log(metaLabels);
 
@@ -121,12 +122,12 @@ d3.json("/data/samples.json").then((metadata) => {
         if (dataset === '940') {
             //         data = ID;
             idArray = [ID, age, gender];
-           
+
         }
 
         // Note the extra brackets around 'x' and 'y'
-  Plotly.restyle("sample-metadata", "x", [idArray]);
-  //Plotly.restyle("plot", "y", [y]);
+        Plotly.restyle("sample-metadata", "x", [idArray]);
+        //Plotly.restyle("plot", "y", [y]);
     }
     //     }
     //     else if (dataset == 'uk') {
