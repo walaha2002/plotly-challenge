@@ -28,14 +28,14 @@ d3.json("/data/samples.json").then((samples) => {
 
     // Slice all variables needed for horizontal chart
 
-    var slceGlblSamples = glblSamples.slice(0, 10);
-    var slceSampleValues = sampleValues.slice(0, 10);
-    var slceMyLabels = myLabels.slice(0, 10);
+    var slceGlblSamples = glblSamples.slice(0, 10).reverse();
+    var slceSampleValues = sampleValues.slice(0, 10).reverse();
+    var slceMyLabels = myLabels.slice(0, 10).reverse();
 
     //Create trace
     var trace1 = {
         x: slceSampleValues,
-        y: slceGlblSamples,
+        y: `OTU ${slceGlblSamples}`,
         orientation: 'h',
         type: 'bar',
         text: slceMyLabels
