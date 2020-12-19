@@ -9,30 +9,47 @@
 //Use Plotly to plot using the element in html
 //Take 1 name and use it to filter the samples to get 1st object after filtering, then use the labels and the object to create the graph
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
-//var metadata;
+// //var metadata;
 function getData(names) {
+
+    //Assign dropdown to a variable
     var dropdownMenu = d3.select("#selDataset");
-console.log(names)
-    names.forEach(name=>{
-        dropdownMenu.append('option').text(name).attr("value",name)
-    })
+    console.log(names)
 
-    //     // Assign the value of the dropdown menu option to a variable
-    // var dataset = dropdownMenu.property("value");
+    names.forEach(name => {
+        //         // Append values to dropdown
+        var selectedOption = dropdownMenu.append('option')
+            .text(name)
+            .attr("value", name);
 
-    // //     // Initialize an empty array for the demographic info
-    // var idArray = [];
+    }
+    )
+};
 
-    // if (dataset === '940') {
-    //     //         data = ID;
-    //     idArray = [ID, age, gender];
 
-    // }
+// Object.entries(selectedOption).forEach(([key, value]) => {
+//     panel - body.append("h3").text(`${key}:${value}`);
 
-    // // Note the extra brackets around 'x' and 'y'
-    // Plotly.restyle("sample-metadata", "x", [idArray]);
-    // //Plotly.restyle("plot", "y", [y]);
-}
+//         //Plotly.restyle("panel panel-primary", "labels", [Object.keys(name[selectedOption])]);
+
+
+
+//     // Assign the value of the dropdown menu option to a variable
+// var dataset = dropdownMenu.property("value");
+
+// //     // Initialize an empty array for the demographic info
+// var idArray = [];
+
+// if (dataset === '940') {
+//     //         data = ID;
+//     idArray = [ID, age, gender];
+
+// }
+
+// // Note the extra brackets around 'x' and 'y'
+// Plotly.restyle("sample-metadata", "x", [idArray]);
+// //Plotly.restyle("plot", "y", [y]);
+
 
 d3.json("/data/samples.json").then((samples) => {
     getData(samples.names)
@@ -51,7 +68,7 @@ d3.json("/data/samples.json").then((samples) => {
     //Create trace
     var trace1 = {
         x: slceSampleValues,
-        y: slceGlblSamples.map(otu_id =>  `OTU ${otu_id}`),
+        y: slceGlblSamples.map(otu_id => `OTU ${otu_id}`),
         orientation: 'h',
         type: 'bar',
         text: slceMyLabels,
@@ -114,6 +131,7 @@ d3.json("/data/samples.json").then((metadata) => {
     console.log(ID);
     console.log("Location*********");
     console.log(location);
+});
 
     // var ageArray = Object.values(age);
     // var ageLabel = Object.keys(age);
@@ -126,7 +144,7 @@ d3.json("/data/samples.json").then((metadata) => {
     //     d3.selectAll("#selDataset").on("change", getData);
 
     //    // Function called by DOM changes
-   
+
     //     }
     //     else if (dataset == 'uk') {
     //         data = uk;
@@ -144,6 +162,3 @@ d3.json("/data/samples.json").then((metadata) => {
     //   }
 
     //   init();
-
-  
-});
