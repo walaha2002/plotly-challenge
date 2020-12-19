@@ -112,7 +112,7 @@ d3.json("/data/samples.json").then((metadata) => {
         var dataset = dropdownMenu.property("value");
 
         //     // Initialize an empty array for the demographic info
-        var idArray = ["940"];
+        var idArray = [];
 
         if (dataset === '940') {
             //         data = ID;
