@@ -67,7 +67,7 @@ d3.json("/data/samples.json").then((samples) => {
 
 //Get metadata
 d3.json("/data/samples.json").then((metadata) => {
-
+    // Use the map method to return specific values in the array
     var metadata = metadata.metadata;
     var age = metadata.map(a => a.age);
     var ethnicity = metadata.map(a => a.ethnicity);
@@ -94,6 +94,10 @@ d3.json("/data/samples.json").then((metadata) => {
     console.log("Location*********");
     console.log(location);
 
+// var ageArray = Object.values(age);
+// var ageLabel = Object.keys(age);
+// console.log(ageArray);
+// console.log(ageLabel);
 
     //     // console.log(metaLabels);
 
@@ -101,16 +105,24 @@ d3.json("/data/samples.json").then((metadata) => {
     //     d3.selectAll("#selDataset").on("change", getData);
 
     //    // Function called by DOM changes
-    // function getData() {
-    //     var dropdownMenu = d3.select("#selDataset");
-    //     // Assign the value of the dropdown menu option to a variable
-    //     var dataset = dropdownMenu.property("value");
+    function getData() {
+        var dropdownMenu = d3.select("#selDataset");
 
-    //     // Initialize an empty array for the demographic info
-    //     var demo = [];
+        //     // Assign the value of the dropdown menu option to a variable
+        var dataset = dropdownMenu.property("value");
 
-    //     if (dataset == 'us') {
-    //         data = us;
+        //     // Initialize an empty array for the demographic info
+        var idArray = ["940"];
+
+        if (dataset === '940') {
+            //         data = ID;
+            idArray = [ID, age, gender];
+        }
+
+        // Note the extra brackets around 'x' and 'y'
+  Plotly.restyle("plot", "x", [idArray]);
+  //Plotly.restyle("plot", "y", [y]);
+    }
     //     }
     //     else if (dataset == 'uk') {
     //         data = uk;
