@@ -14,17 +14,22 @@ function getData(names) {
 
     //Assign dropdown to a variable
     var dropdownMenu = d3.select("#selDataset");
-    console.log(names)
+    //console.log(names)
 
     names.forEach(name => {
         //         // Append values to dropdown
         var selectedOption = dropdownMenu.append('option')
             .text(name)
             .attr("value", name);
+               
 
-    }
-    )
+    })
+    //Plotly.restyle("plot", "labels", [Object.keys(data[selectedOption])]); 
+    // var firstID = names[0];
+    // demoChart(firstID);
+    // buildMeta(firstID);
 };
+
 
 
 // Object.entries(selectedOption).forEach(([key, value]) => {
