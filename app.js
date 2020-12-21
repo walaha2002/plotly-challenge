@@ -56,7 +56,7 @@ function getData(names) {
 // //Plotly.restyle("plot", "y", [y]);
 
 
-d3.json("/data/samples.json").then((samples) => {
+d3.json("samples.json").then((samples) => {
     getData(samples.names)
     var samples = samples.samples;
     var glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
@@ -109,7 +109,7 @@ d3.json("/data/samples.json").then((samples) => {
 });
 
 //Get metadata
-d3.json("/data/samples.json").then((metadata) => {
+d3.json("samples.json").then((metadata) => {
     // Use the map method to return specific values in the array
     var metadata = metadata.metadata;
     var age = metadata.map(a => a.age);
