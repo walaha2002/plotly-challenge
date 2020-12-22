@@ -24,7 +24,7 @@ function getData(names) {
             .text(name)
             .attr("value", name);
     })
-    //buildPlot(names[0]);
+
     populatePanel(names);
 };
 
@@ -65,11 +65,14 @@ d3.json("samples.json").then((samples) => {
     Plotly.newPlot("plot", data, layout);
 
     var trace2 = {
-        x: slceGlblSamples.map(otu_id => `${otu_id}`),
-        //x: glblSamples.slice(0,10).reverse(),
+        //x: slceGlblSamples.map(otu_id => `${otu_id}`),
+        x: glblSamples.slice(0, 10).reverse(),
         y: sampleValues.slice(0, 10).reverse(),
         mode: 'markers',
-        marker: sampleValues.slice(0, 10).reverse(),
+        marker: {
+            color: ['rgb (glblSamples.slice(0,10).reverse())'],
+            size: sampleValues.slice(0, 10).reverse(),
+        },
         text: myLabels
     };
 
@@ -121,7 +124,6 @@ function populatePanel(sample) {
 
         var panel1 = d3.select("#sample-metadata");
         panel1.html("");
-
 
         Object.entries(metadata[0]).forEach(([key, value]) => {
             panel1.append("h5").text(`${key}:${value}`);
