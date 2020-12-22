@@ -75,7 +75,7 @@ d3.json("samples.json").then((samples) => {
         },
         text: myLabels
     };
-
+// Source: https://plotly.com/javascript/bubble-charts/
     var bubble = [trace2];
 
     var bbleLayout = {
