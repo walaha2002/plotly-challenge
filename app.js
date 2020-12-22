@@ -70,12 +70,16 @@ d3.json("samples.json").then((samples) => {
         y: sampleValues.slice(0, 10).reverse(),
         mode: 'markers',
         marker: {
-            color: ['rgb (glblSamples.slice(0,10).reverse())'],
+            //color: ['rgb (glblSamples.slice(0,10).reverse())'],
+            color: glblSamples.slice(0, 10).reverse(),
+            colorscale: "Electric",
             size: sampleValues.slice(0, 10).reverse(),
         },
         text: myLabels
     };
 // Source: https://plotly.com/javascript/bubble-charts/
+// Source: https://code.tutsplus.com/tutorials/create-interactive-charts-using-plotlyjs-bubble-and-dot-charts--cms-29209
+
     var bubble = [trace2];
 
     var bbleLayout = {
