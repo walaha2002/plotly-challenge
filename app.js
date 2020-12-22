@@ -10,52 +10,29 @@
 //Take 1 name and use it to filter the samples to get 1st object after filtering, then use the labels and the object to create the graph
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
 // //var metadata;
+
 function getData(names) {
 
     //Assign dropdown to a variable
     var dropdownMenu = d3.select("#selDataset");
     //console.log(names)
 
+    // Append values to dropdown
     names.forEach(name => {
-        //         // Append values to dropdown
+
         var selectedOption = dropdownMenu.append('option')
             .text(name)
             .attr("value", name);
-               
-
     })
-    //Plotly.restyle("plot", "labels", [Object.keys(data[selectedOption])]); 
-    // var firstID = names[0];
-    // demoChart(firstID);
-    // buildMeta(firstID);
+    //buildPlot(names[0]);
+    populatePanel(names);
 };
-
-
-
-// Object.entries(selectedOption).forEach(([key, value]) => {
-//     panel - body.append("h3").text(`${key}:${value}`);
-
-//         //Plotly.restyle("panel panel-primary", "labels", [Object.keys(name[selectedOption])]);
-
-
-
-//     // Assign the value of the dropdown menu option to a variable
-// var dataset = dropdownMenu.property("value");
-
-// //     // Initialize an empty array for the demographic info
-// var idArray = [];
-
-// if (dataset === '940') {
-//     //         data = ID;
-//     idArray = [ID, age, gender];
-
-// }
 
 // // Note the extra brackets around 'x' and 'y'
 // Plotly.restyle("sample-metadata", "x", [idArray]);
 // //Plotly.restyle("plot", "y", [y]);
 
-
+//function buildPlot(sample) {
 d3.json("samples.json").then((samples) => {
     getData(samples.names)
     var samples = samples.samples;
@@ -88,10 +65,11 @@ d3.json("samples.json").then((samples) => {
     Plotly.newPlot("plot", data, layout);
 
     var trace2 = {
-        x: glblSamples,
-        y: sampleValues,
+        x:slceGlblSamples.map(otu_id => `${otu_id}`),
+        //x: glblSamples.slice(0,10).reverse(),
+        y: sampleValues.slice(0,10).reverse(),
         mode: 'markers',
-        marker: sampleValues,
+        marker: sampleValues.slice(0,10).reverse(),
         text: myLabels
     };
 
@@ -107,8 +85,11 @@ d3.json("samples.json").then((samples) => {
     Plotly.newPlot('bubble', bubble, bbleLayout);
 
 });
-
+//};
+//init();
+function populatePanel(sample){
 //Get metadata
+
 d3.json("samples.json").then((metadata) => {
     // Use the map method to return specific values in the array
     var metadata = metadata.metadata;
@@ -120,23 +101,72 @@ d3.json("samples.json").then((metadata) => {
     var gender = metadata.map(a => a.gender);
     var ID = metadata.map(a => a.id);
 
-    console.log("Metadata*********");
-    console.log(metadata);
-    console.log("Age*********");
-    console.log(age);
-    console.log("Gender*********");
-    console.log(gender);
-    console.log("Ethnicity*********");
-    console.log(ethnicity);
-    console.log("bbtype*********");
-    console.log(bbtype);
-    console.log("Wash Frequency*********");
-    console.log(wfreq);
-    console.log("Identification*********");
-    console.log(ID);
-    console.log("Location*********");
-    console.log(location);
+    // console.log("Metadata*********");
+    // console.log(metadata);
+    // console.log("Age*********");
+    // console.log(age);
+    // console.log("Gender*********");
+    // console.log(gender);
+    // console.log("Ethnicity*********");
+    // console.log(ethnicity);
+    // console.log("bbtype*********");
+    // console.log(bbtype);
+    // console.log("Wash Frequency*********");
+    // console.log(wfreq);
+    // console.log("Identification*********");
+    // console.log(ID);
+    // console.log("Location*********");
+    // console.log(location);
+
+    //var panelData = metadata;
+    var panel1 = d3.select("#sample-metadata");
+    panel1.html("");
+
+//     metadata.forEach(function (bio){
+// var row = panel.append("div");
+
+Object.entries(age).forEach(([key, value]) => {
+         panel1.append("h4").text(`${key}:${value}`);
+    })
 });
+}
+ // 
+        // })
+
+        //buildPlot(names[0]);
+        // Initialize array
+        // var x = [];
+        // if 
+
+
+
+
+        //Plotly.restyle("plot", "labels", [Object.keys(data[selectedOption])]); 
+        // var firstID = names[0];
+        // demoChart(firstID);
+        // buildMeta(firstID);
+
+
+
+
+// Object.entries(selectedOption).forEach(([key, value]) => {
+//     panel - body.append("h3").text(`${key}:${value}`);
+
+//         //Plotly.restyle("panel panel-primary", "labels", [Object.keys(name[selectedOption])]);
+
+
+
+//     // Assign the value of the dropdown menu option to a variable
+// var dataset = dropdownMenu.property("value");
+
+// //     // Initialize an empty array for the demographic info
+// var idArray = [];
+
+// if (dataset === '940') {
+//     //         data = ID;
+//     idArray = [ID, age, gender];
+
+// }
 
     // var ageArray = Object.values(age);
     // var ageLabel = Object.keys(age);
