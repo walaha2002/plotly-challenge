@@ -93,13 +93,13 @@ function populatePanel(sample) {
     d3.json("samples.json").then((metadata) => {
         // Use the map method to return specific values in the array
         var metadata = metadata.metadata;
-        var age = metadata.map(a => a.age)[0];
-        var ethnicity = metadata.map(a => a.ethnicity);
-        var location = metadata.map(a => a.location);
-        var wfreq = metadata.map(a => a.wfreq);
-        var bbtype = metadata.map(a => a.bbtype);
-        var gender = metadata.map(a => a.gender);
-        var ID = metadata.map(a => a.id);
+        // var age = metadata.map(a => a.age);
+        // var ethnicity = metadata.map(a => a.ethnicity);
+        // var location = metadata.map(a => a.location);
+        // var wfreq = metadata.map(a => a.wfreq);
+        // var bbtype = metadata.map(a => a.bbtype);
+        // var gender = metadata.map(a => a.gender);
+        // var ID = metadata.map(a => a.id);
 
         // console.log("Metadata*********");
         // console.log(metadata);
@@ -117,12 +117,13 @@ function populatePanel(sample) {
         // console.log(ID);
         // console.log("Location*********");
         // console.log(location);
+        //var age = age[0];
 
         var panel1 = d3.select("#sample-metadata");
         panel1.html("");
 
 
-        Object.entries(age).forEach(([key, value]) => {
+        Object.entries(metadata[0]).forEach(([key, value]) => {
             panel1.append("h5").text(`${key}:${value}`);
         })
     });
