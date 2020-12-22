@@ -65,11 +65,11 @@ d3.json("samples.json").then((samples) => {
     Plotly.newPlot("plot", data, layout);
 
     var trace2 = {
-        x:slceGlblSamples.map(otu_id => `${otu_id}`),
+        x: slceGlblSamples.map(otu_id => `${otu_id}`),
         //x: glblSamples.slice(0,10).reverse(),
-        y: sampleValues.slice(0,10).reverse(),
+        y: sampleValues.slice(0, 10).reverse(),
         mode: 'markers',
-        marker: sampleValues.slice(0,10).reverse(),
+        marker: sampleValues.slice(0, 10).reverse(),
         text: myLabels
     };
 
@@ -87,50 +87,47 @@ d3.json("samples.json").then((samples) => {
 });
 //};
 //init();
-function populatePanel(sample){
-//Get metadata
+function populatePanel(sample) {
+    //Get metadata
 
-d3.json("samples.json").then((metadata) => {
-    // Use the map method to return specific values in the array
-    var metadata = metadata.metadata;
-    var age = metadata.map(a => a.age);
-    var ethnicity = metadata.map(a => a.ethnicity);
-    var location = metadata.map(a => a.location);
-    var wfreq = metadata.map(a => a.wfreq);
-    var bbtype = metadata.map(a => a.bbtype);
-    var gender = metadata.map(a => a.gender);
-    var ID = metadata.map(a => a.id);
+    d3.json("samples.json").then((metadata) => {
+        // Use the map method to return specific values in the array
+        var metadata = metadata.metadata;
+        var age = metadata.map(a => a.age)[0];
+        var ethnicity = metadata.map(a => a.ethnicity);
+        var location = metadata.map(a => a.location);
+        var wfreq = metadata.map(a => a.wfreq);
+        var bbtype = metadata.map(a => a.bbtype);
+        var gender = metadata.map(a => a.gender);
+        var ID = metadata.map(a => a.id);
 
-    // console.log("Metadata*********");
-    // console.log(metadata);
-    // console.log("Age*********");
-    // console.log(age);
-    // console.log("Gender*********");
-    // console.log(gender);
-    // console.log("Ethnicity*********");
-    // console.log(ethnicity);
-    // console.log("bbtype*********");
-    // console.log(bbtype);
-    // console.log("Wash Frequency*********");
-    // console.log(wfreq);
-    // console.log("Identification*********");
-    // console.log(ID);
-    // console.log("Location*********");
-    // console.log(location);
+        // console.log("Metadata*********");
+        // console.log(metadata);
+        // console.log("Age*********");
+        // console.log(age);
+        // console.log("Gender*********");
+        // console.log(gender);
+        // console.log("Ethnicity*********");
+        // console.log(ethnicity);
+        // console.log("bbtype*********");
+        // console.log(bbtype);
+        // console.log("Wash Frequency*********");
+        // console.log(wfreq);
+        // console.log("Identification*********");
+        // console.log(ID);
+        // console.log("Location*********");
+        // console.log(location);
 
-    //var panelData = metadata;
-    var panel1 = d3.select("#sample-metadata");
-    panel1.html("");
+        var panel1 = d3.select("#sample-metadata");
+        panel1.html("");
 
-//     metadata.forEach(function (bio){
-// var row = panel.append("div");
 
-Object.entries(age).forEach(([key, value]) => {
-         panel1.append("h4").text(`${key}:${value}`);
-    })
-});
+        Object.entries(age).forEach(([key, value]) => {
+            panel1.append("h5").text(`${key}:${value}`);
+        })
+    });
 }
- // 
+ //
         // })
 
         //buildPlot(names[0]);
