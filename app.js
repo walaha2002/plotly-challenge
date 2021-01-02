@@ -9,7 +9,8 @@
 //Use Plotly to plot using the element in html
 //Take 1 name and use it to filter the samples to get 1st object after filtering, then use the labels and the object to create the graph
 //To get top 10, slice the first 10 (0,10) ids, and labels, and samples to feed the chart
-// //var metadata;
+
+// Had assistance from tutor with interactivity of biographical chart on 1/1/2021 then I was able to make the bar chart and bubbles interactive on my own
 
 function getData(names) {
 
@@ -24,22 +25,21 @@ function getData(names) {
             .text(name)
             .attr("value", name);
     })
+    // d3.selectAll("#selDataset").on("change", populatePanel());
+    populatePanel();
+}
 
-    populatePanel(names);
-};
-
-// // Note the extra brackets around 'x' and 'y'
-// Plotly.restyle("sample-metadata", "x", [idArray]);
-// //Plotly.restyle("plot", "y", [y]);
-
-//function buildPlot(sample) {
+// Read in json data
 d3.json("samples.json").then((samples) => {
+
+    // Call function to load dropdown menu
     getData(samples.names)
+        / console.log("append successful")
+
     var samples = samples.samples;
     var glblSamples = samples.filter(item => item.id === "940")[0].otu_ids;
     var sampleValues = samples.filter(item => item.id === "940")[0].sample_values;
     var myLabels = samples.filter(item => item.id === "940")[0].otu_labels;
-
 
     // Slice all variables needed for horizontal chart
 
@@ -47,7 +47,9 @@ d3.json("samples.json").then((samples) => {
     var slceSampleValues = sampleValues.slice(0, 10).reverse();
     var slceMyLabels = myLabels.slice(0, 10).reverse();
 
-    //Create trace
+    //   d3.select("#selDataset").on("change", populatePanel);
+
+    //Create trace and build bar graph
     var trace1 = {
         x: slceSampleValues,
         y: slceGlblSamples.map(otu_id => `OTU ${otu_id}`),
@@ -64,22 +66,23 @@ d3.json("samples.json").then((samples) => {
 
     Plotly.newPlot("plot", data, layout);
 
+    // Create anther trace to build bubble chart
     var trace2 = {
-        //x: slceGlblSamples.map(otu_id => `${otu_id}`),
+
         x: glblSamples.slice(0, 10).reverse(),
         y: sampleValues.slice(0, 10).reverse(),
         mode: 'markers',
         marker: {
-            //color: ['rgb (glblSamples.slice(0,10).reverse())'],
+
             color: glblSamples.slice(0, 10).reverse(),
             colorscale: "Electric",
             size: sampleValues.slice(0, 10).reverse(),
         },
         text: myLabels
     };
-// Source: https://plotly.com/javascript/bubble-charts/
-// Source: https://code.tutsplus.com/tutorials/create-interactive-charts-using-plotlyjs-bubble-and-dot-charts--cms-29209
 
+    // Source: https://plotly.com/javascript/bubble-charts/
+    // Source: https://code.tutsplus.com/tutorials/create-interactive-charts-using-plotlyjs-bubble-and-dot-charts--cms-29209
     var bubble = [trace2];
 
     var bbleLayout = {
@@ -91,16 +94,106 @@ d3.json("samples.json").then((samples) => {
 
     Plotly.newPlot('bubble', bubble, bbleLayout);
 
-});
-//};
-//init();
+    // Source: https://stackoverflow.com/questions/33106742/d3-add-more-than-one-functions-to-an-eventlistener
+    // Need 2 things to happen when there's a new selection in dropdown menu
+    d3.select("#selDataset").on("change.foo", chartFunction);
+    d3.select("#selDataset").on("change", populatePanel);
+
+})
+// Function to build new charts when new ID selected in dropdown menu
+function chartFunction(changeData) {
+
+    d3.json("samples.json").then((samples) => {
+        var dropdownMenu = d3.select("#selDataset");
+        // Assign the value of the dropdown menu option to a variable
+        var option = dropdownMenu.property("value");
+
+        var samples = samples.samples;
+        var glblSamples = samples.filter(item => item.id == option)[0].otu_ids;
+        var sampleValues = samples.filter(item => item.id == option)[0].sample_values;
+        var myLabels = samples.filter(item => item.id == option)[0].otu_labels;
+        console.log()
+
+        // Slice all variables needed for horizontal chart
+
+        var slceGlblSamples = glblSamples.slice(0, 10).reverse();
+        var slceSampleValues = sampleValues.slice(0, 10).reverse();
+        var slceMyLabels = myLabels.slice(0, 10).reverse();
+
+        //Create trace
+        var trace1 = {
+            x: slceSampleValues,
+            y: slceGlblSamples.map(otu_id => `OTU ${otu_id}`),
+            orientation: 'h',
+            type: 'bar',
+            text: slceMyLabels,
+        };
+
+        var data = [trace1];
+
+        var layout = {
+            title: "Belly Button Research"
+        };
+
+        Plotly.newPlot("plot", data, layout);
+
+        var trace2 = {
+            x: glblSamples.slice(0, 10).reverse(),
+            y: sampleValues.slice(0, 10).reverse(),
+            mode: 'markers',
+            marker: {
+                //color: ['rgb (glblSamples.slice(0,10).reverse())'],
+                color: glblSamples.slice(0, 10).reverse(),
+                colorscale: "Electric",
+                size: sampleValues.slice(0, 10).reverse(),
+            },
+            text: myLabels
+        };
+
+        // Source: https://plotly.com/javascript/bubble-charts/
+        // Source: https://code.tutsplus.com/tutorials/create-interactive-charts-using-plotlyjs-bubble-and-dot-charts--cms-29209
+
+        var bubble = [trace2];
+
+        var bbleLayout = {
+            title: 'Bubble',
+            showlegend: false,
+            height: 600,
+            width: 600
+        };
+
+        Plotly.newPlot('bubble', bubble, bbleLayout);
+
+    }
+    )
+}
+// d3.selectAll("#selDataset").on("change", populatePanel());
+
 function populatePanel(sample) {
+
     //Get metadata
+    // Use D3 to select the dropdown menu
+    var dropdownMenu1 = d3.select("#selDataset");
+    
+    // Assign the value of the dropdown menu option to a variable
+    var option1 = dropdownMenu1.property("value");
+    console.log(option1)
 
     d3.json("samples.json").then((metadata) => {
         // Use the map method to return specific values in the array
-        var metadata = metadata.metadata;
-        // var age = metadata.map(a => a.age);
+        console.log(metadata.metadata)
+        var metadata1 = metadata.metadata.filter(item => item.id == option1);
+        var panel1 = d3.select("#sample-metadata");
+        console.log(metadata1)
+        panel1.html("");
+
+        Object.entries(metadata1[0]).forEach(([key, value]) => {
+            panel1.append("h5").text(`${key}:${value}`);
+        })
+    });
+}
+
+ // var age = metadata.map(a => a.age);
         // var ethnicity = metadata.map(a => a.ethnicity);
         // var location = metadata.map(a => a.location);
         // var wfreq = metadata.map(a => a.wfreq);
@@ -125,15 +218,6 @@ function populatePanel(sample) {
         // console.log("Location*********");
         // console.log(location);
         //var age = age[0];
-
-        var panel1 = d3.select("#sample-metadata");
-        panel1.html("");
-
-        Object.entries(metadata[0]).forEach(([key, value]) => {
-            panel1.append("h5").text(`${key}:${value}`);
-        })
-    });
-}
  //
         // })
 
